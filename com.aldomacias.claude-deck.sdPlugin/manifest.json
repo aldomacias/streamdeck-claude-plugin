@@ -1,0 +1,68 @@
+{
+    "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+    "Name": "Claude Deck",
+    "Version": "1.3.2.0",
+    "Author": "Aldo Macias",
+    "URL": "https://github.com/aldomacias/streamdeck-claude-plugin",
+    "Description": "Estado en vivo de tus sesiones de Claude Code (vía hooks) y medidores de uso de Claude en las teclas.",
+    "Category": "Claude Deck",
+    "CategoryIcon": "imgs/plugin/category-icon",
+    "Icon": "imgs/plugin/marketplace",
+    "CodePath": "bin/plugin.js",
+    "SDKVersion": 3,
+    "Software": {
+        "MinimumVersion": "6.9"
+    },
+    "OS": [
+        {
+            "Platform": "mac",
+            "MinimumVersion": "12"
+        },
+        {
+            "Platform": "windows",
+            "MinimumVersion": "10"
+        }
+    ],
+    "Nodejs": {
+        "Version": "20"
+    },
+    "UUID": "com.aldomacias.claude-deck",
+    "Actions": [
+        {
+            "Name": "Sesión de Claude Code",
+            "UUID": "com.aldomacias.claude-deck.session",
+            "Icon": "imgs/actions/session/icon",
+            "Tooltip": "Muestra el estado de una sesión de Claude Code: trabajando, te necesita, listo. Pulsa para ir a la sesión (app de Claude, VS Code, iTerm o Terminal); mantén para liberar el slot.",
+            "PropertyInspectorPath": "ui/session.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "UserTitleEnabled": false,
+            "SupportedInMultiActions": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/session/key",
+                    "TitleAlignment": "middle"
+                }
+            ]
+        },
+        {
+            "Name": "Uso de Claude",
+            "UUID": "com.aldomacias.claude-deck.usage",
+            "Icon": "imgs/actions/usage/icon",
+            "Tooltip": "Medidor de uso de Claude: ventana de 5 h y semanal, con cuenta regresiva al reinicio. Pulsa para refrescar.",
+            "PropertyInspectorPath": "ui/usage.html",
+            "Controllers": [
+                "Keypad"
+            ],
+            "UserTitleEnabled": false,
+            "SupportedInMultiActions": false,
+            "States": [
+                {
+                    "Image": "imgs/actions/usage/key",
+                    "TitleAlignment": "middle"
+                }
+            ]
+        }
+    ]
+}

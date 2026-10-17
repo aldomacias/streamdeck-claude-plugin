@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<title>Uso de Claude</title>
+	<script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
+</head>
+<body>
+	<sdpi-item label="Métrica">
+		<sdpi-select setting="metric" default="both">
+			<option value="both">5 h + semana (barras)</option>
+			<option value="session">Sesión 5 h (anillo)</option>
+			<option value="weekly">Semana 7 d (anillo)</option>
+		</sdpi-select>
+	</sdpi-item>
+	<sdpi-item label="Intervalo (s)" info="Cada cuántos segundos consultar. Todas las teclas comparten una sola consulta.">
+		<sdpi-range setting="intervalSec" min="15" max="600" step="15" default="60" showlabels></sdpi-range>
+	</sdpi-item>
+	<sdpi-item label="Ámbar desde %">
+		<sdpi-range setting="amber" min="10" max="90" step="5" default="50" showlabels></sdpi-range>
+	</sdpi-item>
+	<sdpi-item label="Rojo desde %">
+		<sdpi-range setting="red" min="20" max="100" step="5" default="80" showlabels></sdpi-range>
+	</sdpi-item>
+	<sdpi-item label="User-Agent" info="Avanzado. Debe empezar por claude-code/. Súbelo si el endpoint empieza a responder 429.">
+		<sdpi-textfield setting="userAgent" placeholder="claude-code/2.0.31"></sdpi-textfield>
+	</sdpi-item>
+</body>
+</html>

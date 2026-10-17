@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<title>Sesión de Claude Code</title>
+	<script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
+	<style>#status { font-size: 11px; line-height: 1.4; color: #9a9a9a; white-space: pre-wrap; }</style>
+</head>
+<body>
+	<sdpi-item label="Slot" info="Cada sesión nueva de Claude Code ocupa el slot libre más bajo. Pon 1, 2, 3… en teclas distintas.">
+		<sdpi-range setting="slot" min="1" max="16" step="1" default="1" showlabels></sdpi-range>
+	</sdpi-item>
+	<sdpi-item label="Proyecto" info="Opcional. Si lo llenas, la tecla sigue a la sesión cuya carpeta contenga este texto (ignora el slot). Esa sesión ya no se repite en su tecla de slot.">
+		<sdpi-textfield setting="project" placeholder="p. ej. web-app"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Al pulsar" info="«Ir a la sesión» abre donde corre: la sesión en la app de Claude, el panel de Claude Code en VS Code, la pestaña de iTerm o Terminal. La primera vez macOS pide permiso para que Stream Deck controle iTerm o Terminal.">
+		<sdpi-select setting="pressAction" default="focus">
+			<option value="focus">Ir a la sesión y confirmar</option>
+			<option value="ack">Solo confirmar</option>
+		</sdpi-select>
+	</sdpi-item>
+	<sdpi-item label="Nombre" info="Opcional. Texto que se muestra en lugar del nombre de la carpeta (máx. 12 caracteres visibles).">
+		<sdpi-textfield setting="label" maxlength="16" placeholder="nombre de la carpeta"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Mantener" info="Cuánto hay que mantener la tecla para liberar el slot.">
+		<sdpi-select setting="longPressSec" value-type="number" default="1.2">
+			<option value="0.5">0,5 s</option>
+			<option value="0.8">0,8 s</option>
+			<option value="1.2">1,2 s</option>
+			<option value="2">2 s</option>
+			<option value="3">3 s</option>
+		</sdpi-select>
+	</sdpi-item>
+	<sdpi-item label="Listo" info="La tecla verde vuelve sola a «en espera» tras este tiempo.">
+		<sdpi-select setting="doneAfterMin" value-type="number" default="0">
+			<option value="0">Se queda hasta pulsar</option>
+			<option value="1">Vuelve a espera tras 1 min</option>
+			<option value="5">Vuelve a espera tras 5 min</option>
+			<option value="15">Vuelve a espera tras 15 min</option>
+			<option value="30">Vuelve a espera tras 30 min</option>
+			<option value="60">Vuelve a espera tras 1 h</option>
+		</sdpi-select>
+	</sdpi-item>
+	<sdpi-item label="Te necesita">
+		<sdpi-checkbox setting="steady" label="Ámbar fijo, sin parpadeo"></sdpi-checkbox>
+	</sdpi-item>
+	<sdpi-item label="Puerto" info="Común a todas las teclas (1024–65535, vacío = 17875). Al cambiarlo, el plugin reabre el servidor y actualiza el notificador; no hace falta reiniciar Claude Code.">
+		<sdpi-textfield setting="port" global pattern="\d{4,5}" placeholder="17875"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Hooks">
+		<sdpi-button onclick="installHooks()">Instalar / actualizar hooks de Claude Code</sdpi-button>
+	</sdpi-item>
+	<sdpi-item label="">
+		<sdpi-button onclick="checkHooks()">Comprobar estado</sdpi-button>
+	</sdpi-item>
+	<sdpi-item label="Estado"><div id="status">…</div></sdpi-item>
+	<script>
+		const { streamDeckClient } = SDPIComponents;
+		const status = document.getElementById("status");
+		function installHooks() { status.textContent = "Instalando…"; streamDeckClient.send("sendToPlugin", { event: "installHooks" }); }
+		function checkHooks() { status.textContent = "Comprobando…"; streamDeckClient.send("sendToPlugin", { event: "hooksStatus" }); }
+		streamDeckClient.sendToPropertyInspector.subscribe((ev) => {
+			const p = ev.payload || {};
+			if (p.event !== "hooksStatus") return;
+			status.textContent = (p.ok ? "✓ " : "✕ ") + (p.message || "") + (p.backup ? "\nRespaldo: " + p.backup : "");
+		});
+		checkHooks();
+	</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Dependencias
+node_modules/
+
+# Salidas de compilación y empaquetado (se publican en Releases)
+*.sdPlugin/bin/
+*.sdPlugin/logs/
+dist/
+*.streamDeckPlugin
+
+# Caras generadas por las pruebas
+test/out/
+
+# Sistema y editores
+.DS_Store
+*.log
+.vscode/
+.idea/

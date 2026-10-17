@@ -1,0 +1,50 @@
+{
+  "name": "claude-deck",
+  "version": "1.3.2",
+  "private": true,
+  "description": "Stream Deck plugin: Claude Code session state via hooks + Claude usage meters",
+  "author": "Aldo Macias",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aldomacias/streamdeck-claude-plugin.git"
+  },
+  "homepage": "https://github.com/aldomacias/streamdeck-claude-plugin#readme",
+  "bugs": "https://github.com/aldomacias/streamdeck-claude-plugin/issues",
+  "keywords": [
+    "stream-deck",
+    "elgato",
+    "claude",
+    "claude-code",
+    "hooks"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "rolldown -c rolldown.config.ts",
+    "watch": "rolldown -c rolldown.config.ts -w",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx test/harness.ts",
+    "preview": "tsx scripts/make-preview.ts",
+    "link": "streamdeck link com.aldomacias.claude-deck.sdPlugin",
+    "restart": "streamdeck restart com.aldomacias.claude-deck",
+    "validate": "streamdeck validate com.aldomacias.claude-deck.sdPlugin",
+    "pack": "streamdeck pack com.aldomacias.claude-deck.sdPlugin --output dist --force",
+    "hooks:install": "node com.aldomacias.claude-deck.sdPlugin/bin/install-hooks.js",
+    "hooks:uninstall": "node com.aldomacias.claude-deck.sdPlugin/bin/install-hooks.js --uninstall",
+    "probe": "node com.aldomacias.claude-deck.sdPlugin/bin/probe.js"
+  },
+  "devDependencies": {
+    "@elgato/cli": "^1.7.1",
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "^20.19.0",
+    "rolldown": "^1.0.0-rc.6",
+    "tsx": "^4.23.15",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@elgato/streamdeck": "^2.0.0"
+  }
+}
